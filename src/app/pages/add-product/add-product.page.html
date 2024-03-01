@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" shape="round" (click)="Back()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Añadir producto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label position="floating">Nombre del producto</ion-label>
+      <ion-input [(ngModel)]="product.name" type="text" required></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="floating">Descripción</ion-label>
+      <ion-textarea [(ngModel)]="product.description" rows="5"></ion-textarea>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="floating">Precio</ion-label>
+      <ion-input [(ngModel)]="product.price" type="number" required></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="floating">Cantidad</ion-label>
+      <ion-input [(ngModel)]="product.quantity" type="number" required></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="floating">Talla</ion-label>
+      <ion-input [(ngModel)]="product.size" type="text" required></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="floating">Color</ion-label>
+      <ion-input [(ngModel)]="product.color" type="text" required></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" (click)="takePicture()">Tomar foto</ion-button>
+    <ion-button expand="block" (click)="selectImage()">Seleccionar imagen</ion-button>
+    <ion-button expand="block" (click)="saveProduct()">Guardar producto</ion-button>
+  
+    <!-- <div *ngIf="qrCodeDataURL">
+      <img [src]="qrCodeDataURL" alt="Código QR del producto">
+    </div> -->
+  </ion-list>
+</ion-content>

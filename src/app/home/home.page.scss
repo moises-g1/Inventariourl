@@ -1,0 +1,11 @@
+ion-segment {
+  margin-bottom: 10px;
+}
+
+ion-list {
+  display: none;
+}
+
+ion-list:nth-child(n) {
+  display: block;
+}
