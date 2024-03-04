@@ -15,8 +15,7 @@ import { AddProductPage } from './add-product.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    AddProductPageRoutingModule,
-    // RouterModule.forChild(Routes),
+    AddProductPageRoutingModule,     // RouterModule.forChild(Routes),
     QRCodeModule,
     
 

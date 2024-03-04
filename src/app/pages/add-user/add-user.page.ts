@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-add-user',
@@ -7,8 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddUserPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private navCtrl: NavController,     // Agregar Navegador
+  ) { }
 
+  Back(){
+    this.navCtrl.navigateBack('/home');
+  }
   
   addNewUser() {
     // Aquí va la lógica para agregar un nuevo usuario
