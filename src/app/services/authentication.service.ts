@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Capacitor } from '@capacitor/core';
 
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+
 const APIURL= ''
 
 
@@ -15,7 +18,7 @@ export class AuthenticationService {
     private router: Router,
     private http: HttpClient
   ) {
-    super(Capacitor.isNativePlatform() ? nativeAuthOptions : webAuthOptions);
+    // super(Capacitor.isNativePlatform() ? nativeAuthOptions : webAuthOptions);
   }
 
   async logueado(){

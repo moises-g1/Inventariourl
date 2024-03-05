@@ -10,12 +10,11 @@ import { QRCodeComponent, QRCodeModule } from 'angularx-qrcode';
 import { Camera } from '@ionic-native/camera/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { HttpClientModule } from '@angular/common/http';
-import { InjectSetupWrapper } from '@angular/core/testing';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, QRCodeModule, HttpClientModule,],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy,  }, Camera, File, NavController, QRCodeComponent,InjectSetupWrapper],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy,  }, Camera, File, NavController, QRCodeComponent,],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
