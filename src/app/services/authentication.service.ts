@@ -1,13 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Capacitor } from '@capacitor/core';
+//import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { Usuario } from 'src/app/interfaces/common.interfaces';
 
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+// import { initializeApp } from "firebase/app";
+// import { getAuth } from "firebase/auth";
 
-const APIURL= ''
+const APIURL= 'http://localhost:8000/api/'
 
+export interface Admistrador{
+
+}
 
 @Injectable({
   providedIn: 'root'
@@ -15,30 +19,27 @@ const APIURL= ''
 export class AuthenticationService {
 
   constructor(
-    private router: Router,
+    //private router: Router,
     private http: HttpClient
-  ) {
-    // super(Capacitor.isNativePlatform() ? nativeAuthOptions : webAuthOptions);
+  ) {}
+
+  getUsuarios(): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${APIURL}usuarios`);
   }
 
-  async logueado(){
-    await this.router.navigate(['/']);
+  getUsuario(id: number): Observable<Usuario> {
+    return this.http.get<Usuario>(`${APIURL}usuario/${id}`);
   }
 
-  getAdmin(){
-
+  crearUsuario(usuario: Usuario): Observable<Usuario> {
+    return this.http.post<Usuario>(`${APIURL}usuario`, usuario);
   }
 
-  postAdmin(){
-    
-  }
-  
-  updateAdmin(){
-
+  actualizarUsuario(id: number, usuario: Usuario): Observable<Usuario> {
+    return this.http.put<Usuario>(`${APIURL}usuario/${id}`, usuario);
   }
 
-  deleteAdmin(){
-
+  borrarUsuario(id: number): Observable<void> {
+    return this.http.delete<void>(`${APIURL}usuario/${id}`);
   }
-
-  }
+}

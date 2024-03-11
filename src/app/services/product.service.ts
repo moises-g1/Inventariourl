@@ -1,44 +1,34 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Producto } from 'src/app/interfaces/common.interfaces';
 
-
-const APIURL= ''
+const APIURL= 'http://localhost:8000/api/';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) { }
 
-  getPtoducts(cat: string = 'Beef'){
-    return this.http.get(`${APIURL}filter.php?c=${cat}`)
+  getProducts(): Observable<Producto[]> {
+    return this.http.get<Producto[]>(`${APIURL}productos`);
   }
 
-  addProduct(){
-    return this.http.get(`${APIURL}categories.php`)
+  getProduct(id: number): Observable<Producto> {
+    return this.http.get<Producto>(`${APIURL}producto/${id}`);
   }
 
-  getComida(){
-    return this.http.get(`${APIURL}filter.php?c=Beef`)
-  }
-  getByArea(cat: string = 'Chinese'){
-    return this.http.get(`${APIURL}filter.php?a=${cat}`)
+  createProduct(producto: Producto): Observable<Producto> {
+    return this.http.post<Producto>(`${APIURL}producto`, producto);
   }
 
-  getArea(){
-    return this.http.get(`${APIURL}areas.php`)
+  updateProduct(id: number, producto: Producto): Observable<Producto> {
+    return this.http.put<Producto>(`${APIURL}producto/${id}`, producto);
   }
 
-
-  getIngredientes(){
-    return this.http.get(`${APIURL}list.php?i=list`)
+  deleteProduct(id: number): Observable<void> {
+    return this.http.delete<void>(`${APIURL}producto/${id}`);
   }
-
-
-  
-
 }
-

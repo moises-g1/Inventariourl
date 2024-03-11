@@ -10,43 +10,65 @@
 </ion-header>
 
 <ion-content>
-  <ion-list lines="full">
-    <ion-item>
-      <ion-label position="floating">Nombre del producto</ion-label>
-      <ion-input [(ngModel)]="product.name" type="text" required></ion-input>
-    </ion-item>
-    
-    <ion-item>
-      <ion-label position="floating">Descripción</ion-label>
-      <ion-textarea [(ngModel)]="product.description" rows="5"></ion-textarea>
-    </ion-item>
-    
-    <ion-item>
-      <ion-label position="floating">Precio</ion-label>
-      <ion-input [(ngModel)]="product.price" type="number" required></ion-input>
-    </ion-item>
-    
-    <ion-item>
-      <ion-label position="floating">Cantidad</ion-label>
-      <ion-input [(ngModel)]="product.quantity" type="number" required></ion-input>
-    </ion-item>
-    
-    <ion-item>
-      <ion-label position="floating">Talla</ion-label>
-      <ion-input [(ngModel)]="product.size" type="text" required></ion-input>
-    </ion-item>
-    
-    <ion-item>
-      <ion-label position="floating">Color</ion-label>
-      <ion-input [(ngModel)]="product.color" type="text" required></ion-input>
-    </ion-item>
+  <form [formGroup]="newProductForm" (ngSubmit)="addNewProduct()">
+    <ion-list lines="full">
+      <ion-item>
+        <ion-label position="floating">Modelo</ion-label>
+        <ion-input formControlName="modelo" type="text" required></ion-input>
+      </ion-item>
 
-    <ion-button expand="block" (click)="takePicture()">Tomar foto</ion-button>
-    <ion-button expand="block" (click)="selectImage()">Seleccionar imagen</ion-button>
-    <ion-button expand="block" (click)="saveProduct()">Guardar producto</ion-button>
-  
-    <!-- <div *ngIf="qrCodeDataURL">
-      <img [src]="qrCodeDataURL" alt="Código QR del producto">
-    </div> -->
-  </ion-list>
+      <ion-item>
+        <ion-label position="floating">Tipo</ion-label>
+        <ion-select formControlName="tipo" required>
+          <ion-select-option value="blusa">Blusa</ion-select-option>
+          <ion-select-option value="vestido">Vestido</ion-select-option>
+          <ion-select-option value="pantalon">Pantalón</ion-select-option>
+          <ion-select-option value="camisa">Camisa</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Talla</ion-label>
+        <ion-select formControlName="talla" required>
+          <ion-select-option value="S">S</ion-select-option>
+          <ion-select-option value="M">M</ion-select-option>
+          <ion-select-option value="L">L</ion-select-option>
+          <ion-select-option value="XL">XL</ion-select-option>
+          <ion-select-option value="XXL">XXL</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Color</ion-label>
+        <ion-select formControlName="color" required>
+          <ion-select-option value="rojo">Rojo</ion-select-option>
+          <ion-select-option value="azul">Azul</ion-select-option>
+          <ion-select-option value="verde">Verde</ion-select-option>
+          <ion-select-option value="amarillo">Amarillo</ion-select-option>
+          <ion-select-option value="negro">Negro</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Cantidad</ion-label>
+        <ion-input formControlName="cantidad" type="number" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Precio</ion-label>
+        <ion-input formControlName="precio" type="number" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Descripción</ion-label>
+        <ion-textarea formControlName="descripcion" rows="5"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">URL de la imagen</ion-label>
+        <ion-input formControlName="image" type="url" required></ion-input>
+      </ion-item>
+      <ion-button expand="block" type="submit" color="primary" [disabled]="!newProductForm.valid">Guardar producto</ion-button>
+    </ion-list>
+  </form>
 </ion-content>

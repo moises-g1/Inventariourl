@@ -2,87 +2,101 @@
   <ion-toolbar>
     <ion-icon slot="start" name="woman-outline" size="15"></ion-icon>
     <ion-icon slot="end" name="person-circle-outline"></ion-icon>
-    <ion-title>
-      La tienda de Bety
+    <ion-title class="ion-text-center">
+      Creaciones Sara
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <ion-segment [(ngModel)]="category">
-    <ion-segment-button value="shirt">
-      camisas
+    <ion-segment-button value="camisa">
+      Camisas
     </ion-segment-button>
-    <ion-segment-button value="dress">
+    <ion-segment-button value="vestido">
       Vestidos
     </ion-segment-button>
-    <ion-segment-button value="pants">
+    <ion-segment-button value="pantalon">
       Pantalones
     </ion-segment-button>
-    <ion-segment-button value="blouse">
+    <ion-segment-button value="blusa">
       Blusas
     </ion-segment-button>
   </ion-segment>
 
-  <ion-grid *ngIf="category === 'shirt'">
+  <ion-grid *ngIf="category === 'camisa'">
     <ion-row>
-      <ion-col size="6" *ngFor="let item of shirtItems">
-        <ion-card>
+      <ion-col sizeXs="12" sizeSm="6" sizeMd="4" sizeLg="3" *ngFor="let product of camisa">
+        <ion-card class="product-card">
+          <img src="{{ product.image }}" alt="{{ product.modelo }}">
           <ion-card-header>
-            <ion-card-title>{{ item }}</ion-card-title>
+            <ion-card-title>{{ product.modelo }}</ion-card-title>
+            <ion-card-subtitle>{{ product.color }} - {{ product.talla }}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            This is a shirt item.
+            <p>Precio: {{ product.precio }}</p>
+            <p>Descripción: {{ product.descripcion }}</p>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  <ion-grid *ngIf="category === 'dress'">
+  <ion-grid *ngIf="category === 'vestido'">
     <ion-row>
-      <ion-col size="6" *ngFor="let item of dressItems">
-        <ion-card>
+      <ion-col sizeXs="12" sizeSm="6" sizeMd="4" sizeLg="3" *ngFor="let item of vestido">
+        <ion-card class="product-card">
+          <img src="{{ item.image }}" alt="{{ item.modelo }}">
           <ion-card-header>
-            <ion-card-title>{{ item }}</ion-card-title>
+            <ion-card-title>{{ item.modelo }}</ion-card-title>
+            <ion-card-subtitle>{{ item.color }} - {{ item.talla }}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            This is a dress item.
+            <p>Precio: {{ item.precio }}</p>
+            <p>Descripción: {{ item.descripcion }}</p>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  <ion-grid *ngIf="category === 'pants'">
+  <ion-grid *ngIf="category === 'pantalon'">
     <ion-row>
-      <ion-col size="6" *ngFor="let item of pantsItems">
-        <ion-card>
+      <ion-col sizeXs="12" sizeSm="6" sizeMd="4" sizeLg="3" *ngFor="let item of pantalon">
+        <ion-card class="product-card">
+          <img src="{{ item.image }}" alt="{{ item.modelo }}">
           <ion-card-header>
-            <ion-card-title>{{ item }}</ion-card-title>
+            <ion-card-title>{{ item.modelo }}</ion-card-title>
+            <ion-card-subtitle>{{ item.color }} - {{ item.talla }}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            This is a pants item.
+            <p>Precio: {{ item.precio }}</p>
+            <p>Descripción: {{ item.descripcion }}</p>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  <ion-grid *ngIf="category === 'blouse'">
+  <ion-grid *ngIf="category === 'blusa'">
     <ion-row>
-      <ion-col size="6" *ngFor="let item of blouseItems">
-        <ion-card>
+      <ion-col sizeXs="12" sizeSm="6" sizeMd="4" sizeLg="3" *ngFor="let item of blusa">
+        <ion-card class="product-card">
+          <img src="{{ item.image }}" alt="{{ item.modelo }}">
           <ion-card-header>
-            <ion-card-title>{{ item }}</ion-card-title>
+            <ion-card-title>{{ item.modelo }}</ion-card-title>
+            <ion-card-subtitle>{{ item.color }} - {{ item.talla }}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            This is a blouse item.
+            <p>Precio: {{ item.precio }}</p>
+            <p>Descripción: {{ item.descripcion }}</p>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <!-- Repetir lo mismo para las otras categorías -->
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>

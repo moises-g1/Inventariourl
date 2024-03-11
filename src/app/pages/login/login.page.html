@@ -5,28 +5,29 @@
 </ion-header>
 
 <ion-content class="login-page">
-  <div class="login-container">
-    <ion-card class="login-card">
+    <form [formGroup]="loginForm" (ngSubmit)="validar()">
+    <ion-card class="login-card" style="background-color: #e3e3e3;">
+      <ion-title class="ion-text-center" style="font-family:cursive; color: #5a5959;" >CREACIONES SARA</ion-title>
       <ion-row class="login-row">
         <ion-col size-md="5" size="5" class="ion-padding ion-blue-bkg login-logo">
-          <img src="https://images.prismic.io/ionicframeworkcom/ac68e1d9-9887-4e5a-9820-9290d06638de_ionic+logo+white+on+blue.png" alt="Ionic logo" loading="lazy">
+          <img src="../../../assets/logo.jpg" alt="Ionic logo" loading="lazy">
         </ion-col>
         <ion-col size="6">
           <ion-item>
             <ion-label position="floating">Usuario</ion-label>
-            <ion-input type="text" color="secondary" required></ion-input>
+            <ion-input type="text" color="secondary" formControlName="usuario"></ion-input>
           </ion-item>
-          
+
           <ion-item>
             <ion-label position="floating">Contraseña</ion-label>
-            <ion-input type="password" color="secondary" required></ion-input>
+            <ion-input type="password" color="secondary" formControlName="contrasenia"></ion-input>
           </ion-item>
         </ion-col>
-        
+
         <ion-card-content class="login-content">
-          <ion-button shape="round" color="primary" class="login-button" routerLink="/home">Iniciar sesión</ion-button>
+          <ion-button shape="round" color="primary" class="login-button" type="submit" [disabled]="!loginForm.valid">Iniciar sesión</ion-button>
         </ion-card-content>
       </ion-row>
     </ion-card>
-  </div>
+  </form>
 </ion-content>

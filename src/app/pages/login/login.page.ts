@@ -1,6 +1,8 @@
+import { Usuario } from 'src/app/interfaces/common.interfaces';
 import { Component, OnInit } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
 import { AuthenticationService } from '../../services/authentication.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,45 +10,54 @@ import { AuthenticationService } from '../../services/authentication.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  public errorMessage = toString;
+  usuarios: Usuario[]=[];
+
+  loginForm: FormGroup = this.form.group({
+    usuario: ['', Validators.required],
+    contrasenia: ['', Validators.required]
+  });
 
   constructor(
-    private authService: AuthenticationService,
-    private loadingController: LoadingController
-  ) { }
-
-  async ngOnInit() {
-    // If coming back after logging into Auth0,
-    // and using CURRENT Implicit (web) Login
-    // if (window.location.hash) {
-    //   const loadingIndicator = await this.showLoadingIndictator();
-    //   try {
-    //     await this.authService.handleLoginCallback(window.location.href);
-    //   } catch (e) {
-    //     this.errorMessage = e.message;
-    //   } finally {
-    //     loadingIndicator.dismiss();
-    //   }
-    // }
+    private authS: AuthenticationService,
+    private form: FormBuilder,
+    private router: Router
+  ) {
+    console.log()
   }
 
-  // async login() {
-  //   // Display loading indicator while Auth Connect login window is open
-  //   const loadingIndicator = await this.showLoadingIndictator();
-  //   try {
-  //     await this.authService.login();
-  //   } catch (e) {
-  //     console.error(e.message);
-  //   } finally {
-  //     loadingIndicator.dismiss();
-  //   }
-  // }
+  ngOnInit(){}
 
-  // private async showLoadingIndictator() {
-  //   const loadingIndicator = await this.loadingController.create({
-  //     message: 'Opening login window...',
-  //   });
-  //   await loadingIndicator.present();
-  //   return loadingIndicator;
-  // }
+
+  validar() {
+    if (this.loginForm.valid) {
+      const usuario = this.loginForm.value.usuario;
+      const contrasenia = this.loginForm.value.contrasenia;
+
+      // Realiza la petición al servicio de autenticación para obtener los usuarios
+      this.authS.getUsuarios().subscribe((response: Usuario[]) => {
+        console.log(response);
+        // Verifica si la respuesta contiene algún usuario que cumpla las condiciones
+        const isAdmin = response.some(user => user.nombre === usuario && user.contrasenia === contrasenia && user.tipo_usuario === 'admin');
+        const noAdmin = response.some(user1 => user1.nombre === usuario && user1.contrasenia === contrasenia && user1.tipo_usuario === 'artesano');
+        if (isAdmin) {
+          // Redirige al usuario a la página de inicio
+          this.router.navigate(['/home']);
+        }
+        else {
+          if (noAdmin) {
+            console.log('Solo los administradores pueden acceder');
+          }else{
+            // Muestra un mensaje de error en caso de credenciales incorrectas
+            console.log('Credenciales incorrectas');
+          }
+        }
+      }, error => {
+        // Maneja errores de autenticación
+        console.error('Error de autenticación', error);
+      });
+    }
+  }
+
+
 }
+

@@ -42,6 +42,8 @@ dependencies {
     implementation project(':capacitor-cordova-android-plugins')
 }
 
+
+
 apply from: 'capacitor.build.gradle'
 
 try {
@@ -53,14 +55,7 @@ try {
     logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
 }
 
-plugins {
-  id("com.android.application")
 
-  // Add the Google services Gradle plugin
-  id("com.google.gms.google-services")
-
-  ...
-}
 
 dependencies {
   // Import the Firebase BoM

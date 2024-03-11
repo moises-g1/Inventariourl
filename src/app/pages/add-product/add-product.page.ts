@@ -1,8 +1,8 @@
-import { QRCodeComponent } from 'angularx-qrcode';
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from 'src/app/services/product.service';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   selector: 'app-add-product',
@@ -10,23 +10,26 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./add-product.page.scss'],
 })
 export class AddProductPage implements OnInit {
-  product = {
-    name: '',
-    description: '',
-    price: 0,
-    quantity: 0,
-    size: '',
-    color: '',
-    image: '',
-  };
-
   constructor(
-    private navCtrl: NavController,     // Agregar Navegador
-    private productS: ProductService, // Inyeccion del servicio
-    private qrCodeG: QRCodeComponent
-    ) {}
+    private navCtrl: NavController,
+    private formBuilder: FormBuilder,
+    private productService: ProductService
+  ) {}
 
-   Back(){
+  newProductForm: FormGroup = this.formBuilder.group({
+    modelo: ['', Validators.required],
+    tipo: ['', Validators.required],
+    talla: ['', Validators.required],
+    color: ['', Validators.required],
+    cantidad: [0, [Validators.required, Validators.min(1)]],
+    precio: [0, [Validators.required, Validators.min(0.01)]],
+    descripcion: ['', Validators.required],
+    image: ['', Validators.required] // No es necesario agregar Validators.required aquí
+  });
+
+  ngOnInit() {}
+
+  Back() {
     this.navCtrl.navigateBack('/home');
   }
 
@@ -38,18 +41,16 @@ export class AddProductPage implements OnInit {
         resultType: CameraResultType.Uri,
         source: CameraSource.Camera
       });
-  
-      if (image && image.webPath) { // Verificar si image.webPath tiene un valor
-        this.product.image = image.webPath;
-        console.log(image);
+
+      if (image && image.webPath) {
+        this.newProductForm.patchValue({ image: image.webPath });
         console.log('Imagen agregada exitosamente');
-        
       }
     } catch (error) {
       console.error('Cancelado');
     }
   }
-  
+
   async selectImage() {
     try {
       const image = await Camera.getPhoto({
@@ -58,47 +59,32 @@ export class AddProductPage implements OnInit {
         resultType: CameraResultType.Uri,
         source: CameraSource.Photos
       });
-  
-      if (image && image.webPath) { // Verificar si image.webPath tiene un valor
-        this.product.image = image.webPath;
-        console.log(image);
+
+      if (image && image.webPath) {
+        this.newProductForm.patchValue({ image: image.webPath });
+        console.log('Imagen seleccionada exitosamente');
       }
     } catch (error) {
       console.error('Selecciona una foto');
     }
   }
 
-  async saveProduct() {
-    if(this.validateForm()){
-     try {
-       await this.productS.addProduct(); // Utiliza tu servicio para agregar el producto
-       console.log('Producto guardado exitosamente');
-     } catch (error) {
-       console.error('Error al guardar el producto', error);
-     }
+  async addNewProduct() {
+    if (this.newProductForm.valid) {
+        const newProduct = this.newProductForm.value;
+        console.log(newProduct);
+
+        this.productService.createProduct(newProduct).subscribe(
+          response => {
+            console.log('Producto guardado exitosamente', response);
+            this.navCtrl.navigateBack('/home');
+          },
+          error => {
+            console.error('Error al crear usuario', error);
+          }
+        );
+      } else {
+        console.error('El formato es invalido');
+      }
     }
-  }
-
-  validateForm(): boolean {
-    if (!this.product.name || !this.product.description || !this.product.price || !this.product.quantity || !this.product.size || !this.product.color || !this.product.image) {
-      console.error('Todos los campos son obligatorios');
-      return false;
-    }
-
-    if (isNaN(this.product.price) || isNaN(this.product.quantity) || this.product.price <= 0 || this.product.quantity <= 0) {
-      console.error('El precio y la cantidad deben ser números positivos');
-      return false;
-    }
-
-    return true;
-  }
-
-  generateQRCode() {
-    const qrCodeData = `Producto: ${this.product.name}\nDescripción: ${this.product.description}\nPrecio: ${this.product.price}\nCantidad: ${this.product.quantity}\nTalla: ${this.product.size}\nColor: ${this.product.color}\nImagen: ${this.product.image}`;
-    this.qrCodeG.qrcElement.nativeElement = qrCodeData;
-    console.log(qrCodeData);
-  }
-
-  ngOnInit() {
-  }
 }

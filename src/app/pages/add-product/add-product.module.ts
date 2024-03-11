@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 import { AddProductPageRoutingModule } from './add-product-routing.module';
@@ -17,7 +17,7 @@ import { AddProductPage } from './add-product.page';
     IonicModule,
     AddProductPageRoutingModule,     // RouterModule.forChild(Routes),
     QRCodeModule,
-    
+    ReactiveFormsModule
 
   ],
   declarations: [AddProductPage]
